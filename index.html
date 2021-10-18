@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #items{
+            display:flex;
+            width:90%;
+            margin: auto;
+            margin-top: 10px;
+        }
+        #img1{
+            width:400px;
+            height:150px;
+            cursor: pointer;
+        }
+        #news{
+            margin-top: 10px;
+        }
+        #title{
+            width:30%;
+        }
+        #para{
+            width:30%;
+        }
+
+    </style>
+</head>
+<body>
+    <center><h1>Top News</h1></center>
+    <input type="text" id="search news" placeholder="search">
+    <button onclick="search()">search</button>
+    <div id="news"></div>
+    
+</body>
+</html>
+<script>
+//27067da5c7094a34bb2561c9562b3117
+async function popular(){
+    try{
+    let res=await fetch(`https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=27067da5c7094a34bb2561c9562b3117`);
+    let data=await res.json();
+    console.log("data:",data);
+    show(data.articles)
+}
+catch(e){
+    console.log(`Error:${e}`)
+}
+}
+
+popular();
+var div1=document.getElementById("news");
+function show(news){
+     news.forEach((item) => {
+        var div=document.createElement("div");
+        div.id="items"
+        var title=document.createElement("h2");
+        title.id="title"
+        title.textContent=item.title;
+        var p=document.createElement("p");
+        p.id="para"
+        p.textContent=item.description;
+        var img=document.createElement("img");
+        img.src=item.urlToImage;
+        img.id="img1"
+        div.append(title,p,img);
+        div1.append(div);
+        div.onclick=function(){
+            details(item)
+        }
+});
+}
+
+function details(e){
+    if(localStorage.getItem("news"==null)){
+        localStorage.setItem("news".JSON.stringify([]));
+    }
+    var p=JSON.parse(localStorage.getItem("news"));
+    p=e;
+    localStorage.setItem("news",JSON.stringify(p));
+    console.log(p);
+    location.href="news.html"
+}
+function search(){
+    let search=document.getElementById("search").value;
+    fetch(`https://newsapi.org/v2/everything?q=${search}&from=2021-10-18&sortBy=popularity&apiKey=27067da5c7094a34bb2561c9562b3117`)
+    .then(res=>{
+        returnres.json()
+    })
+    .then(data=>{
+        if(localStorage.getItem("search"==null)){
+            localStorage.setItem("search",JSON.stringify([]));
+        }
+        var p=JSON.parse(localStorage.getItem("search"));
+        p=data.articles;
+        localStorage.setItem("search",JSON.stringify(p));
+        console.log(p)
+        location.href="search.html";
+    })
+
+}
+</script>

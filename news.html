@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            display:flex;
+            width:90%;
+            margin:auto;
+        }
+        img{
+            width:400px;
+            height:150px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2 id="heading"></h2>
+        <p id="para"></p>
+        <img id="img">
+    </div>
+</body>
+</html>
+<script>
+    var details=JSON.parse(localStorage.getItem("news"));
+    console.log(details)
+    var img=document.getElementById("img");
+    img.src=details.urlToImage;
+    var heading=document.getElementById("heading");
+    heading.textContent=details.title;
+    var des=document.getElementById("para");
+    des.textContent=details.description;
+</script>
